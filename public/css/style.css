@@ -1,3 +1,28 @@
+/* Tin tức */
+body{font-family: 'Dancing Script', cursive !important; background-color:#ddd; padding-top:70px;}
+*{ padding:0; margin:0;}
+.bottom{ margin-bottom:20px; }
+.border{border:1px solid #e3e2; padding:15px; margin-bottom:30px;}
+.caption h4{ text-transform:uppercase;}
+.caption p{  font-size:1.5em;}
+
+.img-responsive {
+  -webkit-transition: all 0.5s ease-in-out;
+     -moz-transition: all 0.5s ease-in-out;
+       -o-transition: all 0.5s ease-in-out;
+      -ms-transition: all 0.5s ease-in-out;
+          transition: all 0.5s ease-in-out;
+}
+ 
+.img-responsive:hover {
+  -webkit-transform: rotate(-10deg);
+     -moz-transform: rotate(-10deg);
+       -o-transform: rotate(-10deg);
+      -ms-transform: rotate(-10deg);
+          transform: rotate(-10deg);
+}
+
+/*  */
 .top-contact link-hover-black{
 	font-weight: bold;
 }

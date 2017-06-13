@@ -129,14 +129,12 @@ margin-top: 20px;
 [data-slide="prev"]
 {
 margin-right: 10px;
-}
+}	
 
 </style>
 
 </head>
 <body>
-
-@section('menu')
 <div id="top-bar" class="top-bar-section top-bar-bg-light">
 	<div class="container-fluid">
 		<div class="row">
@@ -146,7 +144,7 @@ margin-right: 10px;
 					<a href="#">
 						<i class="fa fa-phone">
 							
-						</i>+ 123 132 1234</a> 
+						</i>+ 123 132 1234</a> 	
 						<a href="#">
 							<i class="fa fa-envelope">
 								
@@ -225,15 +223,112 @@ margin-right: 10px;
 							<li><a href="#">Dịch vụ</a></li> 
 							<li><a href="#">Khuyến mãi</a></li> 
 							<li><a href="#">Liên hệ</a></li>
-							<li><a href="#">Đăng nhập</a></li>
-							<li><h5 style="padding-right: 10px">|</h5></li>
-							<li><h4><i class="fa fa-shopping-cart" aria-hidden="true"></i></h4></li>     
-							<li style="padding-left: 15px"><i class="fa fa-search" aria-hidden="true"></i></li>    
+							<ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                            </li>
+                        @endif
+                    </ul>
+						
+							<!-- Modal -->
+							<div id="myModal" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content-->
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">Đăng nhập</h4>
+							      </div>
+							      <div class="modal-body">
+							        <div class="row">
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                        {{ csrf_field() }}
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Password</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control" name="password" required>
+
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                    </label>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Login
+                                </button>
+                                 <a   class="btn btn-link"  href="{{ route('register') }}">Bạn chưa có tài khoản >>></a><br>	
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Quên mật khẩu?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+													
 						</ul>
 					</div><!--/.nav-collapse -->
 				</div>
-				<!-- end -->
-@endsection
 				<div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="false" >
 
 					<!-- Indicators -->
@@ -325,10 +420,10 @@ margin-right: 10px;
 							</div>
 						</div>
 						<div class="row">	
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="col-sm-6 col-xs-12">
 								<img src="{{ asset('images/banner.jpg') }}" alt="" class="img-responsive">
 							</div>
-							<div class="col-md-6 about-content">
+							 <div class="col-sm-6 col-xs-12">
 								<h2 class="about-title">We provide great services and ideass</h2>
 								<p class="about-text">
 									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
@@ -337,7 +432,7 @@ margin-right: 10px;
 									Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 								</p>
 								<p class="about-text">
-									Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+									lpa qui officia deserunt mollit anim id est laborum
 								</p>
 							</div>
 						</div>
@@ -365,59 +460,57 @@ margin-right: 10px;
 						</div>
 					</div>
 					<div class="container-fluid"> 
-						<div class="row"> 
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<div class="hovereffect">
-									<img class="img-responsive" src="http://placehold.it/700x400" alt="">
-									<div class="overlay">
-										<h2>Image heading</h2>
-										<p class="info">Our sleek quality work and  synergized effect of our team’s creative mind have paved the way for offering innovative services to our clients.
-											<a href="">Read more >></a>
-										</p>
-
-									</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<img src="http://toomva.com/tai-lieu/uploadtvcu/nghe-tieng-anh-chu-de-ao-dai-phu-de.jpg" alt="" class="img-responsive">
+								<h3>Title</h3>
+								<div class="content">
+									Don't want your columns to simply stack in smaller devices? Use the extra small and medium device grid classes by adding .col-xs-* .col-md-* to your columns. See the example below for a better idea of how it all works.	
 								</div>
-							</div>
-							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-								<div class="hovereffect">
-									<img class="img-responsive" src="http://placehold.it/350x200" alt="">
-									<div class="overlay">
-										<h2>Image heading</h2>
-										<p class="info">Our sleek quality work and  synergized effect of our team’s creative mind have paved the way for offering innovative services to our clients.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-								<div class="hovereffect">
-									<img class="img-responsive" src="http://placehold.it/350x200" alt="">
-									<div class="overlay">
-										<h2>Image heading</h2>
-										<p class="info">Our sleek quality work and  synergized effect of our team’s creative mind have paved the way for offering innovative services to our clients.</p>
-									</div>
-								</div>
-							</div>
-							<br>
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<hr>
 								<br>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<img src="http://toomva.com/tai-lieu/uploadtvcu/nghe-tieng-anh-chu-de-ao-dai-phu-de.jpg" alt="" class="img-responsive">
+								<h3>Title</h3>
+								<div class="content">
+									Don't want your columns to simply stack in smaller devices? Use the extra small and medium device grid classes by adding .col-xs-* .col-md-* to your columns. See the example below for a better idea of how it all works.	
+								</div>
+								<hr>
+								<br>
+							</div>
 
-							</div>
-							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-								<div class="hovereffect">
-									<img class="img-responsive" src="http://placehold.it/350x200" alt="">
-									<div class="overlay">
-										<h2>Image heading</h2>
-										<p class="info">Our sleek quality work and  synergized effect of our team’s creative mind have paved the way for offering innovative services to our clients.</p>
-									</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<img src="http://toomva.com/tai-lieu/uploadtvcu/nghe-tieng-anh-chu-de-ao-dai-phu-de.jpg" alt="" class="img-responsive">
+								<div>
+									<span><h3>Đây là title bài viết</h3></span>
 								</div>
-							</div>
-							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-								<div class="hovereffect">
-									<img class="img-responsive" src="http://placehold.it/350x200" alt="">
-									<div class="overlay">
-										<h2>Image heading</h2>
-										<p class="info">Our sleek quality work and  synergized effect of our team’s creative mind have paved the way for offering innovative services to our clients.</p>
-									</div>
+								<div class="content">
+									Don't want your columns to simply stack in smaller devices? Use the extra small and medium device grid classes by adding .col-xs-* .col-md-* to your columns. See the example below for a better idea of how it all works.	
 								</div>
+								<hr>
+								<br>
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<img src="http://toomva.com/tai-lieu/uploadtvcu/nghe-tieng-anh-chu-de-ao-dai-phu-de.jpg" alt="" class="img-responsive">
+								<h3>Title</h3>
+								<div class="content">
+									Don't want your columns to simply stack in smaller devices? Use the extra small and medium device grid classes by adding .col-xs-* .col-md-* to your columns. See the example below for a better idea of how it all works.	
+								</div>
+								<hr>
+								<br>
+							</div>
+							<!-- Optional: clear the XS cols if their content doesn't match in height -->
+							<div class="col-xs-12 col-sm-4">
+								<img src="http://toomva.com/tai-lieu/uploadtvcu/nghe-tieng-anh-chu-de-ao-dai-phu-de.jpg" alt="" class="img-responsive">
+								<h3>Title</h3>
+								<div class="content">
+									Don't want your columns to simply stack in smaller devices? Use the extra small and medium device grid classes by adding .col-xs-* .col-md-* to your columns. See the example below for a better idea of how it all works.	
+								</div>
+								<hr>
+								<br>
 							</div>
 						</div>
 					</div>
@@ -435,7 +528,6 @@ margin-right: 10px;
 					</div>
 <div class="container">
     <div class="row">
-        <div class="row">
             <div class="col-md-9">
                 
             </div>
@@ -447,7 +539,7 @@ margin-right: 10px;
                 </div>
             </div>
         </div>
-        <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
+        <div id="carousel-example" class="carousel slide" data-ride="carousel">
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
@@ -455,114 +547,89 @@ margin-right: 10px;
                         <div class="col-sm-3">
                             <div class="col-item">
                                 <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
                                 </div>
                                 <div class="info">
                                     <div class="row">
                                         <div class="price col-md-6">
-                                            <h5>
-                                                Sample Product</h5>
+                                            <h4> Xe du lịch</h4>
                                             <h5 class="price-text-color">
                                                 $199.99</h5>
                                         </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="fa fa-star"></i>
-                                        </div>
                                     </div>
                                     <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
+     
                                         <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
                                     </div>
                                     <div class="clearfix">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                       <div class="col-sm-3">
                             <div class="col-item">
                                 <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
                                 </div>
                                 <div class="info">
                                     <div class="row">
                                         <div class="price col-md-6">
-                                            <h5>
-                                                Product Example</h5>
-                                            <h5 class="price-text-color">
-                                                $249.99</h5>
-                                        </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                        </div>
-                                    </div>
-                                    <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
-                                        <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
-                                    </div>
-                                    <div class="clearfix">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="col-item">
-                                <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
-                                </div>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="price col-md-6">
-                                            <h5>
-                                                Next Sample Product</h5>
-                                            <h5 class="price-text-color">
-                                                $149.99</h5>
-                                        </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
-                                        <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
-                                    </div>
-                                    <div class="clearfix">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="col-item">
-                                <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
-                                </div>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="price col-md-6">
-                                            <h5>
-                                                Sample Product</h5>
+                                            <h4> Xe du lịch</h4>
                                             <h5 class="price-text-color">
                                                 $199.99</h5>
                                         </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="separator clear-left">
+     
+                                        <p class="btn-details">
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="price col-md-6">
+                                            <h4> Xe du lịch</h4>
+                                            <h5 class="price-text-color">
+                                                $199.99</h5>
                                         </div>
                                     </div>
                                     <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
+     
                                         <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="price col-md-6">
+                                            <h4> Xe du lịch</h4>
+                                            <h5 class="price-text-color">
+                                                $199.99</h5>
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+     
+                                        <p class="btn-details">
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
                                     </div>
                                     <div class="clearfix">
                                     </div>
@@ -576,114 +643,88 @@ margin-right: 10px;
                         <div class="col-sm-3">
                             <div class="col-item">
                                 <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
                                 </div>
                                 <div class="info">
                                     <div class="row">
                                         <div class="price col-md-6">
-                                            <h5>
-                                                Product with Variants</h5>
+                                            <h4> Xe du lịch</h4>
                                             <h5 class="price-text-color">
                                                 $199.99</h5>
                                         </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="fa fa-star"></i>
-                                        </div>
                                     </div>
                                     <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
+     
                                         <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
                                     </div>
                                     <div class="clearfix">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                       <div class="col-sm-3">
                             <div class="col-item">
                                 <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
                                 </div>
                                 <div class="info">
                                     <div class="row">
                                         <div class="price col-md-6">
-                                            <h5>
-                                                Grouped Product</h5>
-                                            <h5 class="price-text-color">
-                                                $249.99</h5>
-                                        </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                        </div>
-                                    </div>
-                                    <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
-                                        <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
-                                    </div>
-                                    <div class="clearfix">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="col-item">
-                                <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
-                                </div>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="price col-md-6">
-                                            <h5>
-                                                Product with Variants</h5>
-                                            <h5 class="price-text-color">
-                                                $149.99</h5>
-                                        </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
-                                        <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
-                                    </div>
-                                    <div class="clearfix">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="col-item">
-                                <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
-                                </div>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="price col-md-6">
-                                            <h5>
-                                                Product with Variants</h5>
+                                            <h4> Xe du lịch</h4>
                                             <h5 class="price-text-color">
                                                 $199.99</h5>
                                         </div>
-                                        <div class="rating hidden-sm col-md-6">
-                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
-                                            </i><i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="separator clear-left">
+     
+                                        <p class="btn-details">
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="col-sm-3">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="price col-md-6">
+                                            <h4> Xe du lịch</h4>
+                                            <h5 class="price-text-color">
+                                                $199.99</h5>
+                                        </div>
+                                    </div>
+                                    <div class="separator">
+     
+                                        <p class="btn-details">
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src="http://chieutour.com/kcfinder/upload/images/xe-isuzu-samco-35-cho%283%29.jpg" class="img-responsive" alt="a" />
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="price col-md-6">
+                                            <h4> Xe du lịch</h4>
+                                            <h5 class="price-text-color">
+                                                $199.99</h5>
                                         </div>
                                     </div>
                                     <div class="separator clear-left">
-                                        <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Add to cart</a></p>
+     
                                         <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">More details</a></p>
+                                            <i class="fa fa-eye"></i><a href="http://www.jquery2dotnet.com" class="hidden-sm">Xem chi tiết</a></p>
                                     </div>
                                     <div class="clearfix">
                                     </div>
@@ -694,7 +735,6 @@ margin-right: 10px;
                 </div>
             </div>
         </div>
-    </div>
 			</div>
 		</section>
 		<section class="tour">
@@ -767,7 +807,9 @@ margin-right: 10px;
 								</div>
 							</div>
 							<div class="col-md-4">
+
 								<h4><center><b>Tour hot trong ngày</b></center></h4>
+															<hr>
 								<br>
 								<div class="list-group">
 									<button type="button" class="list-group-item list-group-item-action"><a href="#">Tour Đà Nẵng - Hội An >>></a></button>
